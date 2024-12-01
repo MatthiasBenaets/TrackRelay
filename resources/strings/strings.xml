@@ -1,3 +1,7 @@
 <strings>
+
     <string id="AppName">TrackRelay</string>
+
+    <string id="TrackingServerTitle">Tracking Server URL</string>
+
 </strings>
