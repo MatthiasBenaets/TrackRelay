@@ -44,6 +44,56 @@ class TrackRelayView extends WatchUi.SimpleDataField {
             payload["lon"] = (info.currentLocation).toDegrees()[1];
         }
 
+        // Add altitude
+        if (info has :altitude && info.altitude != null) {
+            payload["alt"] = info.altitude;
+        }
+
+        // Add elapsed time
+        if (info has :elapsedTime && info.elapsedTime != null) {
+            payload["time"] = info.elapsedTime;
+        }
+
+        // Add elapsed distance
+        if (info has :elapsedDistance && info.elapsedDistance != null) {
+            payload["dist"] = info.elapsedDistance;
+        }
+
+        // Add speed
+        if (info has :currentSpeed && info.currentSpeed != null) {
+            payload["spd"] = info.currentSpeed;
+        }
+
+        // Add cadence
+        if (info has :currentCadence && info.currentCadence != null) {
+            payload["cad"] = info.currentCadence;
+        }
+
+        // Add heartrate
+        if (info has :currentHeartRate && info.currentHeartRate != null) {
+            payload["hr"] = info.currentHeartRate;
+        }
+
+        // Add power
+        if (info has :currentPower && info.currentPower != null) {
+            payload["pwr"] = info.currentPower;
+        }
+
+        // Add total ascent
+        if (info has :totalAscent && info.totalAscent != null) {
+            payload["asc"] = info.totalAscent;
+        }
+
+        // Add total descent
+        if (info has :totalDescent && info.totalDescent != null) {
+            payload["dec"] = info.totalDescent;
+        }
+
+        // Add calories
+        if (info has :calories && info.calories != null) {
+            payload["cal"] = info.calories;
+        }
+
         // Prepare options for JSON POST request
         var options = {
             :method => Communications.HTTP_REQUEST_METHOD_POST,
