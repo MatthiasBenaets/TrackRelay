@@ -9,6 +9,7 @@ import Toybox.Position;
 class TrackRelayView extends WatchUi.SimpleDataField {
 
     private var trackingStatus = "No Started";
+    private const enableTracking = Application.Properties.getValue("EnableTracking") as Boolean;
     private const trackingServer = Application.Properties.getValue("TrackingServer") as String;
 
     // Set the label of the data field here.
@@ -24,7 +25,7 @@ class TrackRelayView extends WatchUi.SimpleDataField {
     function compute(info as Activity.Info) as Numeric or Duration or String or Null {
         // See Activity.Info in the documentation for available information.
         // Check if activity is in progress.
-        if (info.timerState == Activity.TIMER_STATE_ON && trackingServer != null ) {
+        if (info.timerState == Activity.TIMER_STATE_ON && trackingServer != null && enableTracking) {
             // Trigger web request when activity is running
             sendTrackingUpdate(info);
             return trackingStatus;

@@ -1,5 +1,9 @@
 <settings>
 
+    <setting propertyKey="@Properties.EnableTracking" title="@Strings.EnableTrackingTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.TrackingServer" title="@Strings.TrackingServerTitle">
         <settingConfig type="alphaNumeric" />
     </setting>

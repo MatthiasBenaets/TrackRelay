@@ -1,5 +1,7 @@
 <properties>
 
+    <property id="EnableTracking" type="boolean">true</property>
+
     <property id="TrackingServer" type="string"></property>
 
 </properties>
