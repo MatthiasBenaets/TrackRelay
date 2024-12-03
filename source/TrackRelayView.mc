@@ -11,6 +11,9 @@ class TrackRelayView extends WatchUi.SimpleDataField {
     private var trackingStatus = "No Started";
     private const enableTracking = Application.Properties.getValue("EnableTracking") as Boolean;
     private const trackingServer = Application.Properties.getValue("TrackingServer") as String;
+    var startElevation = null as Number;
+    var startDistance = 0 as Number;
+    var lastCalculatedGrade = 0 as Number;
 
     // Set the label of the data field here.
     function initialize() {
@@ -26,12 +29,43 @@ class TrackRelayView extends WatchUi.SimpleDataField {
         // See Activity.Info in the documentation for available information.
         // Check if activity is in progress.
         if (info.timerState == Activity.TIMER_STATE_ON && trackingServer != null && enableTracking) {
-            // Trigger web request when activity is running
+            // Set starting altitude
+            if (startElevation == null ) {
+                startElevation = info.altitude;
+            }
+            // Send tracking data
             sendTrackingUpdate(info);
             return trackingStatus;
         }
         return "Paused";
     }
+
+    // Computer the current grade
+    function computeGrade(info) as Number {
+        var currentElevation = info.altitude;
+        var currentDistance = info.elapsedDistance;
+
+        // Subtract starting elevation/distance from current elevation/distance
+        // By dividing the elevation change with the distance change, the grade is calculated
+        if (startDistance != null && currentDistance != null) {
+            var distanceChange = currentDistance - startDistance;
+
+            // Check grade every 50 meters
+            if (distanceChange >= 50) {
+                var elevationChange = currentElevation - startElevation;
+
+                startDistance = currentDistance;
+                startElevation = currentElevation;
+                lastCalculatedGrade = elevationChange;
+
+                return (elevationChange / distanceChange) * 100;
+            }
+        }
+
+        // Return last known grade if no update
+        return lastCalculatedGrade;
+    }
+
 
     function sendTrackingUpdate(info as Activity.Info) {
         // Prepare payload
@@ -93,6 +127,11 @@ class TrackRelayView extends WatchUi.SimpleDataField {
         // Add calories
         if (info has :calories && info.calories != null) {
             payload["cal"] = info.calories;
+        }
+
+        // Add grade
+        if (info has :altitude && info has :elapsedDistance && info.altitude != null && info.elapsedDistance != null) {
+            payload["grd"] = computeGrade(info);
         }
 
         // Prepare options for JSON POST request
