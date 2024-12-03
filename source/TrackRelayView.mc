@@ -114,6 +114,11 @@ class TrackRelayView extends WatchUi.SimpleDataField {
             payload["pwr"] = info.currentPower;
         }
 
+        // Add average power
+        if (info has :averagePower && info.averagePower != null) {
+            payload["avgp"] = info.averagePower;
+        }
+
         // Add total ascent
         if (info has :totalAscent && info.totalAscent != null) {
             payload["asc"] = info.totalAscent;
