@@ -51,8 +51,8 @@ class TrackRelayView extends WatchUi.SimpleDataField {
         if (startDistance != null && currentDistance != null) {
             var distanceChange = currentDistance - startDistance;
 
-            // Check grade every 50 meters
-            if (distanceChange >= 50) {
+            // Check grade every 100 meters
+            if (distanceChange >= 100) {
                 var elevationChange = currentElevation - startElevation;
 
                 startDistance = currentDistance;
