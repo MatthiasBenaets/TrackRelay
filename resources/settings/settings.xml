@@ -8,4 +8,8 @@
         <settingConfig type="alphaNumeric" />
     </setting>
 
+    <setting propertyKey="@Properties.ServerAuthorization" title="@Strings.ServerAuthorizationTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+
 </settings>

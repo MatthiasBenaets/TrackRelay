@@ -11,6 +11,7 @@ class TrackRelayView extends WatchUi.SimpleDataField {
     private var trackingStatus = "No Started";
     private const enableTracking = Application.Properties.getValue("EnableTracking") as Boolean;
     private const trackingServer = Application.Properties.getValue("TrackingServer") as String;
+    private const serverAuthorization = Application.Properties.getValue("ServerAuthorization") as String;
     var startElevation = null as Number;
     var startDistance = 0 as Number;
     var lastCalculatedGrade = 0 as Number;
@@ -126,7 +127,7 @@ class TrackRelayView extends WatchUi.SimpleDataField {
 
         // Add total descent
         if (info has :totalDescent && info.totalDescent != null) {
-            payload["dec"] = info.totalDescent;
+            payload["desc"] = info.totalDescent;
         }
 
         // Add calories
@@ -143,7 +144,8 @@ class TrackRelayView extends WatchUi.SimpleDataField {
         var options = {
             :method => Communications.HTTP_REQUEST_METHOD_POST,
             :headers => {
-                "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON
+                "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON,
+                "Authorization" => serverAuthorization
             }
         };
 

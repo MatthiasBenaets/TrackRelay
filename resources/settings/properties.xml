@@ -4,4 +4,6 @@
 
     <property id="TrackingServer" type="string"></property>
 
+    <property id="ServerAuthorization" type="string"></property>
+
 </properties>

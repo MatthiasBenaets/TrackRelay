@@ -6,4 +6,6 @@
 
     <string id="TrackingServerTitle">Tracking Server URL</string>
 
+    <string id="ServerAuthorizationTitle">Server Authorization</string>
+
 </strings>
